@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         Query firebaseSearchQuery =databaseReference.orderByChild("title").startAt(searchText).endAt(searchText +"\uf8ff");
         FirebaseRecyclerAdapter<Model,ViewHolder> firebaseRecyclerAdapter=
                 new FirebaseRecyclerAdapter<Model, ViewHolder>(
-                        Model.class,R.layout.row,ViewHolder.class,databaseReference
+                        Model.class,R.layout.row,ViewHolder.class,firebaseSearchQuery
                 ) {
                     @Override
                     protected void populateViewHolder(ViewHolder viewHolder, Model model, int position) {
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         int id =item.getItemId();
         if(id == R.id.action_setting){
             //TODO
-            return  true; 
+            return  true;
         }
         return super.onOptionsItemSelected(item);
     }
