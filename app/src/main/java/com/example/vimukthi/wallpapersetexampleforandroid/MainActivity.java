@@ -1,5 +1,9 @@
 package com.example.vimukthi.wallpapersetexampleforandroid;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,11 +14,17 @@ import android.support.v7.widget.SearchView;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+
+import java.io.ByteArrayOutputStream;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,8 +61,45 @@ public class MainActivity extends AppCompatActivity {
                         viewHolder.setDetails(getApplicationContext(),model.getTitle(),model.getDescription(),model.getImage());
 
                     }
-                };
-        recyclerView.setAdapter(firebaseRecyclerAdapter);
+
+                    @Override
+                    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                        ViewHolder viewHolder = super.onCreateViewHolder(parent,viewType);
+                        viewHolder.setClickListner(new ViewHolder.ClickListner() {
+                                    @Override
+                                    public void onItemClick(View view, int position) {
+
+                                        TextView txtTitle =view.findViewById(R.id.txttitle);
+                                        TextView txtDes =view.findViewById(R.id.txtdes);
+                                        ImageView imgView=view.findViewById(R.id.imgtitle);
+
+                                        String mTitle =txtTitle.getText().toString();
+                                        String mDes =txtDes.getText().toString();
+                                        Drawable drawable=imgView.getDrawable();
+                                        Bitmap bitmap=((BitmapDrawable)drawable).getBitmap();
+
+                                        Intent intent =new Intent(getApplicationContext(),PostDetailActivity.class);
+                                        ByteArrayOutputStream stream=new ByteArrayOutputStream();
+                                        bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
+                                        byte[] bytes =stream.toByteArray();
+                                        intent.putExtra("image",bytes);
+                                        intent.putExtra("title",mTitle);
+                                        intent.putExtra("des",mDes);
+                                        startActivity(intent);
+
+
+                                    }
+
+                                    @Override
+                                    public void onItemLongClick(View view, int position) {
+
+                                    }
+                                });
+
+                                return super.onCreateViewHolder(parent, viewType);
+                            }
+                        };
+
     }
 
     @Override
@@ -95,6 +142,43 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected void populateViewHolder(ViewHolder viewHolder, Model model, int position) {
                 viewHolder.setDetails(getApplicationContext(),model.getTitle(),model.getDescription(),model.getImage());
+            }
+
+            @Override
+            public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                ViewHolder viewHolder = super.onCreateViewHolder(parent,viewType);
+                viewHolder.setClickListner(new ViewHolder.ClickListner() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+
+                        TextView txtTitle =view.findViewById(R.id.txttitle);
+                        TextView txtDes =view.findViewById(R.id.txtdes);
+                        ImageView imgView=view.findViewById(R.id.imgtitle);
+
+                        String mTitle =txtTitle.getText().toString();
+                        String mDes =txtDes.getText().toString();
+                        Drawable drawable=imgView.getDrawable();
+                        Bitmap bitmap=((BitmapDrawable)drawable).getBitmap();
+
+                        Intent intent =new Intent(getApplicationContext(),PostDetailActivity.class);
+                        ByteArrayOutputStream stream=new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
+                         byte[] bytes =stream.toByteArray();
+                         intent.putExtra("image",bytes);
+                         intent.putExtra("title",mTitle);
+                         intent.putExtra("des",mDes);
+                         startActivity(intent);
+
+
+                    }
+
+                    @Override
+                    public void onItemLongClick(View view, int position) {
+
+                    }
+                });
+
+                return super.onCreateViewHolder(parent, viewType);
             }
         };
         recyclerView.setAdapter(firebaseRecyclerAdapter);

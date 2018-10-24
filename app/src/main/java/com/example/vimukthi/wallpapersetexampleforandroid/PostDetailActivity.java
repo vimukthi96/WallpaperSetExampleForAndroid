@@ -1,5 +1,7 @@
 package com.example.vimukthi.wallpapersetexampleforandroid;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +23,20 @@ public class PostDetailActivity extends AppCompatActivity {
 
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
+
+        txtTitle =(TextView)findViewById(R.id.titleTxt);
+        txtDes=(TextView)findViewById(R.id.desTxt);
+        imgView=(ImageView)findViewById(R.id.titleImage);
+
+
+        byte[] bytes =getIntent().getByteArrayExtra("image");
+        String title=getIntent().getStringExtra("title");
+        String des=getIntent().getStringExtra("des");
+        Bitmap btmap= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+
+        txtTitle.setText(title);
+        txtDes.setText(des);
+        imgView.setImageBitmap(btmap);
     }
 
     @Override

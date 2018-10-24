@@ -19,7 +19,7 @@
         >
 
         <TextView
-            android:id="@+id/txttitle"
+            android:id="@+id/titleTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Title"
@@ -28,14 +28,14 @@
             android:textStyle="bold"
             tools:ignore="DuplicateIds" />
         <ImageView
-            android:id="@+id/imgtitle"
+            android:id="@+id/titleImage"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:background="@drawable/maxresdefault"
             android:scaleType="centerCrop"
             />
         <TextView
-            android:id="@+id/txtdes"
+            android:id="@+id/desTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Description"
